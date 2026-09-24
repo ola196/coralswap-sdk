@@ -1,3 +1,4 @@
+.idea
 node_modules/
 dist/
 coverage/
@@ -9,3 +10,4 @@ coverage/
 *.tsbuildinfo
 docs/*
 !docs/PERFORMANCE.md
+!docs/error-taxonomy.md

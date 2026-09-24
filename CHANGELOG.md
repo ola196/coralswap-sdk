@@ -1,5 +1,14 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+- CI check requiring a CHANGELOG entry under `[Unreleased]` for PRs that change `src/`
+- `MonitoringModule.getSystemMetrics(period)`: TVL, swap volume, fee revenue, and unique-user change vs. the previous equal-length window, plus top growing/declining pools. Historical figures are read through the shared `TypedEventCursor` (#478)
+
+### Fixed
+- Restored source, config, and test files corrupted when #784, #785, #786, #789, #790, and #792 were merged (overwritten code, invalid `package.json` / `package-lock.json`), which left `main` unable to install, compile, or pass CI
+
 ## [1.1.0] - 2026-02-17
 
 ### Added
@@ -26,3 +35,27 @@
 
 ### Backward Compatible
 - Existing `secretKey` usage continues to work unchanged
+
+## [2.0.0] - 2026-06-29
+
+### Added
+- Full [Migration Guide](./MIGRATION.md) from v1 to v2
+- Treasury, Staking, Governance, Limit Orders, DCA, Stop Loss, Positions modules
+- Alerts, Webhooks, Monitoring modules
+- RouterModule with multi-hop swap support
+- Enhanced `simulateTransaction()` with typed return values
+- `estimateOnly` option on liquidity operations
+- `Signer` interface for external wallet adapters (Freighter, Albedo)
+- `mapError()` utility for automatic contract error mapping
+- `CircuitBreakerError`, `PriceDeviationError`, `StaleOracleError`, `SignerError` error classes
+- 18 new utility functions (validation, simulation, gas, events)
+
+### Changed
+- Improved error handling with `executeWithFallback` for multi-RPC resilience
+- `CoralSwapClient` constructor now supports `rpcUrl` as string array for fallback URLs
+- `SwapModule.getQuote()`/`execute()` now accept `path` for multi-hop routing
+- `LiquidityModule.getAddLiquidityQuote()` signature simplified (removed `amountBDesired`)
+
+### Deprecated
+- Legacy `simulateTransaction(ops, source)` string form — prefer enhanced options object
+- Manual `instanceof` error chain — prefer `mapError()`
